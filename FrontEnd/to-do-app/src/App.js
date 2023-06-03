@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { format } from 'date-fns';
 import axios from 'axios';
 import './App.css';
 
@@ -11,28 +12,7 @@ function App() {
   const [updateItemText, setUpdateItemText] = useState('');
   const [updateDueDate, setUpdateDueDate] = useState('');
   const [updateTaskDescription, setUpdateTaskDescription] = useState('');
-  const [sortBy, setSortBy] = useState('date');
-
-  const toggleCompleted = async (id, completed) => {
-    try {
-      await axios.put(`http://localhost:5500/api/item/${id}`, {
-        completed: !completed,
-      });
-      const updatedItems = listItems.map((item) => {
-        if (item._id === id) {
-          return {
-            ...item,
-            completed: !completed,
-          };
-        }
-        return item;
-      });
-      setListItems(updatedItems);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  const [sortBy, setSortBy] = useState('default');
 
   // Add new todo item to database
   const addItem = async (e) => {
@@ -103,6 +83,26 @@ function App() {
       setUpdateDueDate('');
       setUpdateTaskDescription('');
       setIsUpdating('');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  const toggleCompleted = async (id, completed) => {
+    try {
+      await axios.put(`http://localhost:5500/api/item/${id}`, {
+        completed: !completed,
+      });
+      const updatedItems = listItems.map((item) => {
+        if (item._id === id) {
+          return {
+            ...item,
+            completed: !completed,
+          };
+        }
+        return item;
+      });
+      setListItems(updatedItems);
     } catch (err) {
       console.log(err);
     }
@@ -180,13 +180,18 @@ function App() {
         return 0; // no change in order
       });
     }
+  
+    // Set the default sorting order when the "default" option is selected
     if (option === 'default') {
-      // No sorting, keep the list as it is
-      sortedItems = [...listItems];
+      window.location.reload();
     }
+  
     setListItems(sortedItems);
     setSortBy(option);
   };
+  
+
+
 
   return (
     <div className="main">
@@ -221,6 +226,7 @@ function App() {
               placeholder="DD-MM-YYYY"
               name="dueDate" id='dueDate'
               onChange={(e) => setDueDate(e.target.value)}
+              min={format(new Date(), 'yyyy-MM-dd')}
               value={dueDate} required
             />
             <label htmlFor="dueDate" className="form__label">Due Date</label>
@@ -261,7 +267,7 @@ function App() {
                       </span>
                     </li>
                     <span className="item-due-date">
-                      {item.dueDate}
+                      {format(new Date(item.dueDate), 'dd-MMM-yy')}
                       <input
                         className="chkbx"
                         type="checkbox"
