@@ -3,6 +3,8 @@ import { format } from 'date-fns';
 import axios from 'axios';
 import './App.css';
 
+import logo from './images/logo192.png';
+
 function App() {
   const [itemText, setItemText] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -18,11 +20,21 @@ function App() {
   // Add new todo item to database
   const addItem = async (e) => {
     e.preventDefault();
+
+    const trimmedItemText = itemText.trim();
+    const trimmedDueDate = dueDate.trim();
+    const trimmedTaskDescription = taskDescription.trim();
+
+    if (!trimmedItemText || !trimmedDueDate || !trimmedTaskDescription) {
+      alert('Please fill in all the fields');
+      return;
+    }
+
     try {
       const res = await axios.post('http://localhost:5500/api/item', {
-        item: itemText,
-        dueDate: dueDate,
-        taskDescription: taskDescription,
+        item: trimmedItemText,
+        dueDate: trimmedDueDate,
+        taskDescription: trimmedTaskDescription,
         completed: false,
       });
       setListItems((prev) => [...prev, res.data]);
@@ -88,7 +100,7 @@ function App() {
       console.log(err);
     }
   };
-  
+
   const toggleCompleted = async (id, completed) => {
     try {
       await axios.put(`http://localhost:5500/api/item/${id}`, {
@@ -181,16 +193,16 @@ function App() {
         return 0; // no change in order
       });
     }
-  
+
     // Set the default sorting order when the "default" option is selected
     if (option === 'default') {
       window.location.reload();
     }
-  
+
     setListItems(sortedItems);
     setSortBy(option);
   };
-  
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = listItems.slice(indexOfFirstItem, indexOfLastItem);
@@ -205,7 +217,10 @@ function App() {
   return (
     <div className="main">
       <div className="home">
-        <h1>Todo List</h1>
+        <div className='Top'>
+          <img className='top-logo' src={logo} alt=''></img>
+          <h1>Todo List</h1>
+        </div>
         <form className="form" onSubmit={(e) => addItem(e)}>
           <div class="form__group field">
             <input type="input"
@@ -246,17 +261,7 @@ function App() {
 
       <div className="nav-div">
         <h2>Tasks</h2>
-        <div className="pagination">
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-          <button
-            key={page}
-            className={currentPage === page ? 'active' : ''}
-            onClick={() => paginate(page)}
-          >
-            {page}
-          </button>
-        ))}
-      </div>
+
         <div className="sortBy">
           <label htmlFor="sortBy">Sort by:</label>
           <select
@@ -288,8 +293,7 @@ function App() {
                     </li>
                     <span className="item-due-date">
                       {format(new Date(item.dueDate), 'dd-MMM-yy')}
-                      <input
-                        className="chkbx"
+                      <input className="chkbx"
                         type="checkbox"
                         id="myCheckbox"
                         checked={item.completed}
@@ -318,6 +322,11 @@ function App() {
               </>
             )}
           </div>
+        ))}
+      </div>
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+          <button key={page} className={currentPage === page ? 'active' : ''} onClick={() => paginate(page)}>{page}</button>
         ))}
       </div>
     </div>

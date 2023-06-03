@@ -12,6 +12,7 @@ body {
   margin: 0 0;
 }
 .todo-listItems{
+  padding: 10px;
   scale: 0.95;
 }
 @media only screen and (max-width: 600px) {
@@ -291,15 +292,15 @@ h2 {
 
 .sortBy{
   font-family: Helvetica, sans-serif;
-  color: #808080;
-  font-size: 12px;
+  color: #9b9b9b;
+  font-size: 18px;
 }
 
 #sortBy {
   padding: 8px;
   border: none;
   /* border-radius: 4px; */
-  font-size: 14px;
+  font-size: 18px;
   background-color: #ffffff00;
   color: #1481BA;
 }
@@ -356,4 +357,28 @@ h2 {
 
 .pagination button:last-child {
   border-radius: 0 5px 5px 0;
+}
+
+input[type="checkbox"].chkbx {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border: 2px solid green;
+  border-radius: 3px;
+  background-color: white;
+  content: "\2713";
+}
+
+input[type="checkbox"].chkbx:checked {
+  background-color: green;
+}
+.Top{
+  display: flex;
+  align-items: center;
+}
+.Top img{
+  width: 32px;
+  height: 32px;
+  margin-right: 5px;
 }
