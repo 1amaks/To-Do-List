@@ -1,0 +1,28 @@
+.footer {
+  background-color: #1480ba94;
+  padding: 0 20px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.foot-span {
+  padding: 1%;
+  font-size: 15px;
+}
+
+.footer-content {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.foot-link {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+.foot-link:hover {
+  color: #11b5e4;
+}

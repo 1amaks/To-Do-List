@@ -2,13 +2,30 @@ body {
   font-family: "Poppins", sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   min-height: 100vh;
   font-size: 1.5rem;
   background-color: #001021;
 }
 
+.nav-div{
+  margin: 0 0;
+}
+.todo-listItems{
+  scale: 0.95;
+}
+@media only screen and (max-width: 600px) {
+  .todo-listItems{
+    scale: 0.95;
+    min-height: 300px;
+  }
+  body{
+    overflow: scroll;
+  }
+}
+h1{
+  font-size: 40px;
+}
 h1,
 h2 {
   color: #1481BA;
@@ -16,8 +33,8 @@ h2 {
 
 .form__group {
   position: relative;
-  padding: 15px 0 0;
-  margin-top: 10px;
+  padding: 10px 0 0;
+  margin-top: 5px;
   /* width: 50%; */
 }
 
@@ -222,7 +239,7 @@ hr {
 }
 
 .taskCard {
-  padding: 2%;
+  padding: 0 10px;
   color: #001021;
   /* background-color: rgba(0, 0, 0, 0.3); */
 }
@@ -230,9 +247,6 @@ hr {
 .todo-listItems {
   margin-top: 0;
   background-color: #11B5E4 !important;
-  max-height: 300px;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
 }
 h1{
   margin: 0 0 0 0;
@@ -310,4 +324,36 @@ h2 {
 
 .completed{
   opacity: 0.8;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #555;
+  padding: 8px 12px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #eee;
+}
+
+.pagination button.active {
+  background-color: #ccc;
+}
+
+.pagination button:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.pagination button:last-child {
+  border-radius: 0 5px 5px 0;
 }

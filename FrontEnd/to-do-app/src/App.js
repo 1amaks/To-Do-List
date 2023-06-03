@@ -13,7 +13,8 @@ function App() {
   const [updateDueDate, setUpdateDueDate] = useState('');
   const [updateTaskDescription, setUpdateTaskDescription] = useState('');
   const [sortBy, setSortBy] = useState('default');
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
   // Add new todo item to database
   const addItem = async (e) => {
     e.preventDefault();
@@ -190,7 +191,15 @@ function App() {
     setSortBy(option);
   };
   
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = listItems.slice(indexOfFirstItem, indexOfLastItem);
 
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPages = Math.ceil(listItems.length / itemsPerPage);
 
 
   return (
@@ -237,6 +246,17 @@ function App() {
 
       <div className="nav-div">
         <h2>Tasks</h2>
+        <div className="pagination">
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+          <button
+            key={page}
+            className={currentPage === page ? 'active' : ''}
+            onClick={() => paginate(page)}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
         <div className="sortBy">
           <label htmlFor="sortBy">Sort by:</label>
           <select
@@ -253,7 +273,7 @@ function App() {
       </div>
 
       <div className="todo-listItems">
-        {listItems.map((item) => (
+        {currentItems.map((item) => (
           <div className="todo-item" key={item._id}>
             {isUpdating === item._id ? (
               renderUpdateForm()
@@ -298,7 +318,6 @@ function App() {
               </>
             )}
           </div>
-
         ))}
       </div>
     </div>
