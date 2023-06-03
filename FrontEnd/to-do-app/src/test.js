@@ -33,7 +33,6 @@ function App() {
     }
   };
 
-
   // Add new todo item to database
   const addItem = async (e) => {
     e.preventDefault();
@@ -171,18 +170,7 @@ function App() {
     if (option === 'date') {
       sortedItems.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
     } else if (option === 'status') {
-      sortedItems.sort((a, b) => {
-        if (a.completed && !b.completed) {
-          return -1; // a comes before b
-        } else if (!a.completed && b.completed) {
-          return 1; // b comes before a
-        }
-        return 0; // no change in order
-      });
-    }
-    if (option === 'default') {
-      // No sorting, keep the list as it is
-      sortedItems = [...listItems];
+      sortedItems.sort((a, b) => a.completed - b.completed);
     }
     setListItems(sortedItems);
     setSortBy(option);
@@ -239,7 +227,6 @@ function App() {
             value={sortBy}
             onChange={(e) => sortList(e.target.value)}
           >
-            <option value="default">Default</option>
             <option value="date">Date</option>
             <option value="status">Status</option>
           </select>
@@ -253,46 +240,27 @@ function App() {
               renderUpdateForm()
             ) : (
               <>
-                <div className={`taskCard ${item.completed ? 'completed' : ''}`}>
-                  <div className="top-row">
-                    <li>
-                      <span className={`item-content ${item.completed ? 'completed' : ''}`}>
-                        {item.item}
-                      </span>
-                    </li>
-                    <span className="item-due-date">
-                      {item.dueDate}
-                      <input
-                        className="chkbx"
-                        type="checkbox"
-                        id="myCheckbox"
-                        checked={item.completed}
-                        onChange={() => toggleCompleted(item._id, item.completed)}
-                      />
-                      <label className="checkbox-label" htmlFor="myCheckbox">
-                        Mark as Done
-                      </label>
+                <div className='taskCard'>
+                  <div className='top-row'>
+                    <li><span className="item-content">{item.item}</span></li>
+                    <span className="item-due-date">{item.dueDate}
+                      <input className="chkbx" type="checkbox" id="myCheckbox" checked={item.completed} onChange={() => toggleCompleted(item._id, item.completed)} />
+                      <label className="checkbox-label" for="myCheckbox">Mark as Done</label>
                     </span>
                   </div>
-                  <div className="top-row">
-                    <p className={`item-description ${item.completed ? 'completed' : ''}`}>
-                      {item.taskDescription}
-                    </p>
-                    <div className="button-group">
-                      <button className="AddTask update-item" onClick={() => setIsUpdating(item._id)}>
-                        Update
-                      </button>
-                      <button className="AddTask delete-item" onClick={() => deleteItem(item._id)}>
-                        Delete
-                      </button>
+                  <div className='top-row'>
+                    <p className="item-description">{item.taskDescription}</p>
+                    <div className='button-group'>
+                      <button className="AddTask update-item" onClick={() => setIsUpdating(item._id)}>Update</button>
+                      <button className="AddTask delete-item" onClick={() => deleteItem(item._id)}>Delete</button>
                     </div>
                   </div>
+
                 </div>
                 <hr />
               </>
             )}
           </div>
-
         ))}
       </div>
     </div>

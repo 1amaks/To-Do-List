@@ -6,12 +6,12 @@ body {
   align-items: center;
   min-height: 100vh;
   font-size: 1.5rem;
-  background-color: #343434;
+  background-color: #001021;
 }
 
 h1,
 h2 {
-  color: bisque;
+  color: #1481BA;
 }
 
 .form__group {
@@ -26,6 +26,7 @@ h2 {
 }
 
 .todo-item {
+  background-color: #11B5E4;
   display: flex;
   flex-direction: column;
   color: #fff;
@@ -36,6 +37,7 @@ h2 {
   font-size: 1em;
   margin: 0;
   padding: 0;
+  font-weight: bold;
 }
 
 .item-description,
@@ -44,6 +46,11 @@ h2 {
 .update-item-due-date {
   font-size: 0.8em;
   margin: 0;
+}
+.nav-div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .top-row {
@@ -98,8 +105,10 @@ h2 {
   padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  -o-border-image: linear-gradient(to right, #11998e, #38ef7d);
-  border-image: linear-gradient(to right, #11998e, #38ef7d);
+  -o-border-image: linear-gradient(to right, #1481BA, #034748);
+  border-image: linear-gradient(to right, #1481BA, #034748);
+  /* -o-border-image: linear-gradient(to right, #11998e, #38ef7d);
+  border-image: linear-gradient(to right, #11998e, #38ef7d); */
   border-image-slice: 1;
 }
 
@@ -109,7 +118,7 @@ h2 {
   display: block;
   transition: 0.2s;
   font-size: 1rem;
-  color: #11998e;
+  color: #1481BA;
   font-weight: 700;
 }
 
@@ -120,6 +129,7 @@ h2 {
 
 .date {
   width: 65%;
+  color-scheme: dark;
 }
 
 .DateAdd {
@@ -141,6 +151,12 @@ h2 {
   background-size: 50.5% calc(var(--_p, 0%)/2 + .5%);
   outline-offset: .1em;
   transition: background-size .4s, background-position 0s .4s;
+}
+.add{
+  width: 20%;
+}
+#title{
+  font-weight:900;
 }
 
 .AddTask:hover {
@@ -201,26 +217,28 @@ h2 {
 }
 
 hr {
-  color: #799911;
-  width: 40vw;
+  color: #000000 !important;
+  width: 90vw;
 }
 
 .taskCard {
   padding: 2%;
-  background-color: rgba(0, 0, 0, 0.3);
+  color: #001021;
+  /* background-color: rgba(0, 0, 0, 0.3); */
 }
 
 .todo-listItems {
   margin-top: 0;
-  background-image: linear-gradient(to right, #11998e, #38ef7d);
-  border-radius: 1em;
+  background-color: #11B5E4 !important;
   max-height: 300px;
   overflow-y: scroll;
   scroll-behavior: smooth;
 }
-
+h1{
+  margin: 0 0 0 0;
+}
 h2 {
-  margin: 20px 0;
+  margin: 15px 0;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -255,4 +273,41 @@ h2 {
   100% {
     color: black;
   }
+}
+
+.sortBy{
+  font-family: Helvetica, sans-serif;
+  color: #808080;
+  font-size: 12px;
+}
+
+#sortBy {
+  padding: 8px;
+  border: none;
+  /* border-radius: 4px; */
+  font-size: 14px;
+  background-color: #ffffff00;
+  color: #1481BA;
+}
+
+#sortBy option {
+  background-color: #fff;
+  color: #1481BA;
+}
+
+#sortBy option:hover {
+  background-color: #f5f5f5;
+}
+
+#sortBy option:checked {
+  font-weight: bold;
+}
+
+.completed .item-content,
+.completed .item-description {
+  text-decoration: line-through;
+}
+
+.completed{
+  opacity: 0.8;
 }
